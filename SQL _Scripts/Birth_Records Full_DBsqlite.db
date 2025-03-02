@@ -1,0 +1,58 @@
+BEGIN TRANSACTION;
+CREATE TABLE IF NOT EXISTS Birth_Record (
+    Birth_ID INTEGER PRIMARY KEY,
+    Date TEXT,
+    Num_birth INTEGER,
+    Hospital_ID TEXT,
+    Doctor_ID INTEGER,
+    Birth_type_ID INTEGER,
+    FOREIGN KEY (Hospital_ID) REFERENCES Hospital(Hospital_ID),
+    FOREIGN KEY (Doctor_ID) REFERENCES Doctor(Doctor_ID),
+    FOREIGN KEY (Birth_type_ID) REFERENCES Birth_Type(Birth_type_ID)
+);
+CREATE TABLE IF NOT EXISTS Birth_Type (
+    Birth_type_ID INTEGER PRIMARY KEY,
+    Birth_type_name TEXT
+);
+CREATE TABLE IF NOT EXISTS Doctor (
+    Doctor_ID INTEGER PRIMARY KEY,
+    Name TEXT,
+    Specialization TEXT
+);
+CREATE TABLE IF NOT EXISTS Hospital (
+    Hospital_ID TEXT PRIMARY KEY,
+    Name TEXT,
+    Location TEXT
+);
+CREATE TABLE IF NOT EXISTS Mother (
+	Mother_ID INTEGER PRIMARY KEY, 
+	Age INTEGER,
+	Health_Status TEXT,
+	Region_ID INTEGER,
+	FOREIGN KEY (Region_ID) REFERENCES Region (Region_ID)
+);
+CREATE TABLE IF NOT EXISTS Region (
+
+	Region_ID INTEGER PRIMARY KEY,
+	Name TEXT,
+	State TEXT
+);
+INSERT INTO "Birth_Record" ("Birth_ID","Date","Num_birth","Hospital_ID","Doctor_ID","Birth_type_ID") VALUES (5001,'2024-01-10',1,'H001',101,1),
+ (5002,'2024-02-15',2,'H002',102,2),
+ (5003,'2024-03-20',1,'H003',103,3);
+INSERT INTO "Birth_Type" ("Birth_type_ID","Birth_type_name") VALUES (1,'Natural Birth'),
+ (2,'C-Section'),
+ (3,'Water Birth');
+INSERT INTO "Doctor" ("Doctor_ID","Name","Specialization") VALUES (101,'Dr. John Smith','Obstetrics'),
+ (102,'Dr. Alice Johnson','Pediatrics'),
+ (103,'Dr. Robert Brown','Gynecology');
+INSERT INTO "Hospital" ("Hospital_ID","Name","Location") VALUES ('H001','City General Hospital','New York'),
+ ('H002','Sunrise Medical Center','Los Angeles'),
+ ('H003','Riverside Hospital','Chicago');
+INSERT INTO "Mother" ("Mother_ID","Age","Health_Status","Region_ID") VALUES (1001,28,'Healthy',1),
+ (1002,32,'High Blood Pressure',2),
+ (1003,25,'Gestational Diabetes',3);
+INSERT INTO "Region" ("Region_ID","Name","State") VALUES (1,'Brooklyn','New York'),
+ (2,'Santa Monica','California'),
+ (3,'Downtown','Illinois');
+COMMIT;
